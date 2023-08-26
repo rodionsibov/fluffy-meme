@@ -1,0 +1,7 @@
+<ng-container *ngIf="tutorials$ | async as tutorials; else loading">
+  {{ tutorials }}
+</ng-container>
+
+<ng-template #loading>
+  <div class="animate-pulse">loading...</div>
+</ng-template>
