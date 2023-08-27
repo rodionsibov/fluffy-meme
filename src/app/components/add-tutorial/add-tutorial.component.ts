@@ -22,7 +22,10 @@ export class AddTutorialComponent {
   private fb = inject(FormBuilder);
 
   form: FormGroup = this.fb.group({
-    title: ['New tutorial about how to read books', Validators.required],
+    title: [
+      'How to use Angular directives to render markdown documents',
+      Validators.required,
+    ],
     description: ['', Validators.required],
     published: false,
   });
