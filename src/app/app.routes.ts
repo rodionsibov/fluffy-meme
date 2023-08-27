@@ -12,14 +12,14 @@ export const routes: Routes = [
     path: 'tutorials:id',
     loadComponent: () =>
       import('./components/tutorial-details/tutorial-details.component').then(
-        (x) => x.TutorialDetailsComponent
+        (c) => c.TutorialDetailsComponent
       ),
   },
   {
     path: 'add',
     loadComponent: () =>
       import('./components/add-tutorial/add-tutorial.component').then(
-        (x) => x.AddTutorialComponent
+        (c) => c.AddTutorialComponent
       ),
   },
 ];
