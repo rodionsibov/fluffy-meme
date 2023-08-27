@@ -1,7 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, inject } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
-import { Tutorial } from 'src/app/models/tutorial.model';
 import { TutorialService } from 'src/app/services/tutorial.service';
 import {
   AbstractControl,
@@ -59,6 +58,7 @@ export class AddTutorialComponent {
   onReset(): void {
     this.submitted = false;
     this.errors = false;
+    this.success = false;
     this.form.reset();
   }
 

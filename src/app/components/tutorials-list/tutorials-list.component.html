@@ -1,5 +1,20 @@
 <ng-container *ngIf="tutorials$ | async as tutorials; else loading">
-  {{ tutorials }}
+  <div class="prose prose-img:rounded-3xl mx-auto space-y-20">
+    <div *ngFor="let tut of tutorials" class="break-words">
+      <div class="text-sm opacity-70 mb-2">
+        {{ tut.updatedAt | date }}
+      </div>
+      <a [routerLink]="tut.title" class="no-underline hover:underline">
+        <h1>
+          {{ tut.title }}
+        </h1>
+      </a>
+      <div [innerHTML]="tut.description" class="whitespace-pre-line"></div>
+      <div class="divider pt-14">
+        <img class="w-32" src="/src/assets/divider.png" alt="" />
+      </div>
+    </div>
+  </div>
 </ng-container>
 
 <ng-template #loading>

@@ -1,89 +1,89 @@
-<div class="max-w-xs mx-auto">
-  <div *ngIf="success" class="alert alert-success">
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      class="stroke-current shrink-0 h-6 w-6"
-      fill="none"
-      viewBox="0 0 24 24"
-    >
-      <path
-        stroke-linecap="round"
-        stroke-linejoin="round"
-        stroke-width="2"
-        d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
-      />
-    </svg>
-    <span>Tutorial was submitted successfully!</span>
-  </div>
-  <div *ngIf="errors" class="alert alert-error">
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      class="stroke-current shrink-0 h-6 w-6"
-      fill="none"
-      viewBox="0 0 24 24"
-    >
-      <path
-        stroke-linecap="round"
-        stroke-linejoin="round"
-        stroke-width="2"
-        d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"
-      />
-    </svg>
-    <span>Error! Task failed successfully.</span>
-  </div>
-  <form [formGroup]="form" (ngSubmit)="onSubmit()" class="mt-8">
-    <div class="space-y-4">
-      <div class="form-control w-full max-w-xs">
-        <label for="title" class="label">
-          <span class="label-text">Title</span>
-        </label>
-        <input
-          id="title"
-          name="title"
-          formControlName="title"
-          type="text"
-          class="input input-bordered w-full max-w-xs"
-          [ngClass]="{ 'input-error': submitted && f['title'].errors }"
-        />
-        <ng-container *ngIf="submitted && f['title'].errors">
-          <label *ngIf="f['title'].errors['required']" class="label">
-            <span class="label-text-alt text-error">Title is required</span>
-          </label>
-        </ng-container>
-      </div>
-      <div class="form-control w-full max-w-xs">
-        <label for="description" class="label">
-          <span class="label-text">Description</span>
-        </label>
-        <textarea
-          id="description"
-          name="description"
-          formControlName="description"
-          type="text"
-          class="input input-bordered w-full max-w-xs h-60"
-          [ngClass]="{ 'input-error': submitted && f['description'].errors }"
-        >
-        </textarea>
-        <ng-container *ngIf="submitted && f['description'].errors">
-          <label *ngIf="f['description'].errors['required']" class="label">
-            <span class="label-text-alt text-error"
-              >Description is required</span
-            >
-          </label>
-        </ng-container>
-      </div>
-      <div class="form-control">
-        <label class="label cursor-pointer">
-          <span class="label-text">Published</span>
-          <input type="checkbox" class="toggle" formControlName="published" />
-        </label>
-      </div>
-    </div>
-    <div class="flex justify-between my-8">
-      <button type="submit" class="btn btn-primary">Submit</button>
-      <button type="button" (click)="onReset()" class="btn btn-warning">
-        Reset
-      </button>
-    </div>
-  </form>
+<div *ngIf="success" class="alert alert-success">
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    class="stroke-current shrink-0 h-6 w-6"
+    fill="none"
+    viewBox="0 0 24 24"
+  >
+    <path
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      stroke-width="2"
+      d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
+    />
+  </svg>
+  <span>Tutorial was submitted successfully!</span>
 </div>
+<div *ngIf="errors" class="alert alert-error">
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    class="stroke-current shrink-0 h-6 w-6"
+    fill="none"
+    viewBox="0 0 24 24"
+  >
+    <path
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      stroke-width="2"
+      d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"
+    />
+  </svg>
+  <span>Error! Task failed successfully.</span>
+</div>
+<form [formGroup]="form" (ngSubmit)="onSubmit()" class="mt-8">
+  <div class="space-y-4">
+    <div class="form-control w-full">
+      <label for="title" class="label">
+        <span class="label-text">Title</span>
+      </label>
+      <input
+        id="title"
+        name="title"
+        formControlName="title"
+        maxlength="255"
+        type="text"
+        class="input input-bordered w-full"
+        [ngClass]="{ 'input-error': submitted && f['title'].errors }"
+      />
+      <ng-container *ngIf="submitted && f['title'].errors">
+        <label *ngIf="f['title'].errors['required']" class="label">
+          <span class="label-text-alt text-error">Title is required</span>
+        </label>
+      </ng-container>
+    </div>
+    <div class="form-control w-full">
+      <label for="description" class="label">
+        <span class="label-text">Description</span>
+      </label>
+      <textarea
+        contenteditable="true"
+        id="description"
+        name="description"
+        formControlName="description"
+        type="text"
+        class="input input-bordered w-full h-96"
+        [ngClass]="{ 'input-error': submitted && f['description'].errors }"
+      >
+      </textarea>
+      <ng-container *ngIf="submitted && f['description'].errors">
+        <label *ngIf="f['description'].errors['required']" class="label">
+          <span class="label-text-alt text-error">Description is required</span>
+        </label>
+      </ng-container>
+    </div>
+    <div class="form-control">
+      <label class="label cursor-pointer">
+        <span class="label-text">{{
+          f["published"].value ? "Published" : "Unpublished"
+        }}</span>
+        <input type="checkbox" class="toggle" formControlName="published" />
+      </label>
+    </div>
+  </div>
+  <div class="flex justify-between my-8">
+    <button type="button" (click)="onReset()" class="btn btn-outline">
+      Reset
+    </button>
+    <button type="submit" class="btn btn-neutral">Submit</button>
+  </div>
+</form>
