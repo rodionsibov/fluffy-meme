@@ -73,7 +73,7 @@
           formControlName="description"
           type="text"
           class="textarea textarea-bordered w-full h-96"
-          [ngClass]="{ 'input-error': submitted && f['description'].errors }"
+          [ngClass]="{ 'textarea-error': submitted && f['description'].errors }"
         >
         </textarea>
         <ng-container *ngIf="submitted && f['description'].errors">
