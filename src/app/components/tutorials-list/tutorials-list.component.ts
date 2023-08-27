@@ -2,12 +2,13 @@ import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TutorialService } from 'src/app/services/tutorial.service';
 import { map } from 'rxjs';
-import {RouterLink} from '@angular/router';
+import { RouterLink } from '@angular/router';
+import { MarkdownModule } from 'ngx-markdown';
 
 @Component({
   selector: 'app-tutorials-list',
   standalone: true,
-  imports: [CommonModule, RouterLink],
+  imports: [CommonModule, RouterLink, MarkdownModule],
   templateUrl: './tutorials-list.component.html',
   styleUrls: ['./tutorials-list.component.css'],
 })

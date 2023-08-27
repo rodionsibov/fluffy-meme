@@ -30,6 +30,16 @@
   </svg>
   <span>Error! Task failed successfully.</span>
 </div>
+
+<div markdown ngPreserveWhitespaces>
+  ```html
+  <img src="https://picsum.photos/200" />
+
+  Here's an image: ![][image_ref_a32ff4ads] More text here... ...
+  [image_ref_a32ff4ads]:
+  data:image/png;base64,iVBORw0KGgoAAAANSUhEke02C1MyA29UWKgPA...RS12D== ```
+</div>
+
 <form [formGroup]="form" (ngSubmit)="onSubmit()" class="mt-8">
   <div class="space-y-4">
     <div class="form-control w-full">
@@ -51,26 +61,39 @@
         </label>
       </ng-container>
     </div>
-    <div class="form-control w-full">
-      <label for="description" class="label">
-        <span class="label-text">Description</span>
-      </label>
-      <textarea
-        contenteditable="true"
-        id="description"
-        name="description"
-        formControlName="description"
-        type="text"
-        class="input input-bordered w-full h-96"
-        [ngClass]="{ 'input-error': submitted && f['description'].errors }"
-      >
-      </textarea>
-      <ng-container *ngIf="submitted && f['description'].errors">
-        <label *ngIf="f['description'].errors['required']" class="label">
-          <span class="label-text-alt text-error">Description is required</span>
+    <div class="flex flex-col md:flex-row gap-8 w-full">
+      <div class="form-control w-full">
+        <label for="description" class="label">
+          <span class="label-text">Description (markdown)</span>
         </label>
-      </ng-container>
+        <textarea
+          contenteditable="true"
+          id="description"
+          name="description"
+          formControlName="description"
+          type="text"
+          class="textarea textarea-bordered w-full h-96"
+          [ngClass]="{ 'input-error': submitted && f['description'].errors }"
+        >
+        </textarea>
+        <ng-container *ngIf="submitted && f['description'].errors">
+          <label *ngIf="f['description'].errors['required']" class="label">
+            <span class="label-text-alt text-error"
+              >Description is required</span
+            >
+          </label>
+        </ng-container>
+      </div>
+      <div class="form-control w-full">
+        <label class="label">
+          <span class="label-text">Preview (html)</span>
+        </label>
+        <div class="bg-gray-50 flex-1 rounded-md p-4">
+          <div markdown [data]="f['description'].value" class="prose"></div>
+        </div>
+      </div>
     </div>
+
     <div class="form-control">
       <label class="label cursor-pointer">
         <span class="label-text">{{

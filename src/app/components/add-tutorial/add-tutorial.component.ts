@@ -8,11 +8,12 @@ import {
   FormGroup,
   Validators,
 } from '@angular/forms';
+import { MarkdownModule } from 'ngx-markdown';
 
 @Component({
   selector: 'app-add-tutorial',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [CommonModule, ReactiveFormsModule, MarkdownModule],
   templateUrl: './add-tutorial.component.html',
   styleUrls: ['./add-tutorial.component.css'],
 })
@@ -21,7 +22,7 @@ export class AddTutorialComponent {
   private fb = inject(FormBuilder);
 
   form: FormGroup = this.fb.group({
-    title: ['', Validators.required],
+    title: ['New tutorial about how to read books', Validators.required],
     description: ['', Validators.required],
     published: false,
   });
