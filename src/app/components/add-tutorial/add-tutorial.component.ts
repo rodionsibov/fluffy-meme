@@ -9,6 +9,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { MarkdownModule } from 'ngx-markdown';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-add-tutorial',
@@ -19,6 +20,7 @@ import { MarkdownModule } from 'ngx-markdown';
 })
 export class AddTutorialComponent {
   private tutorialService = inject(TutorialService);
+  private router = inject(Router);
   private fb = inject(FormBuilder);
 
   form: FormGroup = this.fb.group({
@@ -31,8 +33,6 @@ export class AddTutorialComponent {
   });
 
   submitted = false;
-  success = false;
-  errors = false;
 
   get f(): { [key: string]: AbstractControl } {
     return this.form.controls;
@@ -48,21 +48,16 @@ export class AddTutorialComponent {
     this.tutorialService.create$(this.form.value).subscribe({
       next: (res) => {
         console.log(res);
-        this.success = true;
-        this.errors = false;
+        this.router.navigate(['/']);
       },
       error: (e) => {
         console.error(e);
-        this.errors = true;
-        this.success = false;
       },
     });
   }
 
   onReset(): void {
     this.submitted = false;
-    this.errors = false;
-    this.success = false;
     this.form.reset();
   }
 

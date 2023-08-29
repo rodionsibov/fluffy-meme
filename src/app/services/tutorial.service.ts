@@ -1,6 +1,6 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import { catchError, tap, throwError } from 'rxjs';
+import { catchError, map, Observable, of, tap, throwError } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { Tutorial } from '../models/tutorial.model';
 
@@ -8,27 +8,59 @@ import { Tutorial } from '../models/tutorial.model';
   providedIn: 'root',
 })
 export class TutorialService {
-  constructor() {}
   http = inject(HttpClient);
 
-  getAll$ = this.http.get<Tutorial[]>(`${environment.apiUrl}`).pipe(
-    tap((val) => {
-      console.log('tutorials:', val);
-    }),
-    catchError((err) => throwError(() => err))
+  private handlerError(err: HttpErrorResponse): Observable<never> {
+    let errorMessage = `An error occured: ${err.message}`;
+    console.log(err);
+    return throwError(() => errorMessage);
+  }
+
+  getAll$ = this.http.get<Tutorial[]>(`${environment.apiUrl}/tutorials`).pipe(
+    tap((data) => console.log(JSON.stringify(data))),
+    map((data) => data.reverse()),
+    catchError(this.handlerError)
   );
 
-  get$ = (id: string) => this.http.get<Tutorial>(`${environment.apiUrl}/${id}`);
+  get$ = (id: string) =>
+    this.http.get<Tutorial>(`${environment.apiUrl}/tutorials/${id}`).pipe(
+      tap((data) => console.log(JSON.stringify(data))),
+      catchError(this.handlerError)
+    );
 
-  create$ = (data: Tutorial) => this.http.post<Tutorial>(`${environment.apiUrl}`, data);
+  create$ = (data: Tutorial) =>
+    this.http.post<Tutorial>(`${environment.apiUrl}/tutorials`, data).pipe(
+      tap((data) => console.log(JSON.stringify(data))),
+      catchError(this.handlerError)
+    );
 
   update$ = (id: string, data: Tutorial) =>
-    this.http.put<Tutorial>(`${environment.apiUrl}/${id}`, data);
+    this.http.put<Tutorial>(`${environment.apiUrl}/tutorials/${id}`, data).pipe(
+      tap((data) => console.log(JSON.stringify(data))),
+      catchError(this.handlerError)
+    );
 
-  delete$ = (id: string) => this.http.delete<{}>(`${environment.apiUrl}/${id}`);
+  delete$ = (id: string) =>
+    this.http.delete<{}>(`${environment.apiUrl}/tutorials/${id}`).pipe(
+      tap((data) => console.log(JSON.stringify(data))),
+      catchError(this.handlerError)
+    );
 
-  deleteAll$ = this.http.delete<{}>(`${environment.apiUrl}`);
+  deleteAll$ = () =>
+    this.http.delete<{}>(`${environment.apiUrl}/tutorials`).pipe(
+      tap((data) => console.log(JSON.stringify(data))),
+      catchError(this.handlerError)
+    );
 
-  findByTitle = (title: string) =>
-    this.http.get<Tutorial[]>(`${environment.apiUrl}?Title=${title}`);
+  findByTitle = (title: string) => {
+    if (!title.trim()) {
+      return of([]);
+    }
+    return this.http
+      .get<Tutorial[]>(`${environment.apiUrl}/tutorials?title=${title}`)
+      .pipe(
+        tap((data) => console.log(JSON.stringify(data))),
+        catchError(this.handlerError)
+      );
+  };
 }
